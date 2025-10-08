@@ -1,0 +1,929 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Vishal Chavan • Portfolio</title>
+    <link rel="icon" type="image/png" href="/assets/briefcase-solid-full.svg" />
+    <meta
+      name="description"
+      content="Frontend Developer & UI/UX Designer — React, Tailwind, TypeScript. Projects: WanderLodge, Checkmate."
+    />
+    <meta name="author" content="Vishal Chavan" />
+    <link rel="preconnect" href="https://cdn.tailwindcss.com" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            fontFamily: { display: ["ui-sans-serif", "system-ui"] },
+            colors: {
+              primary: {
+                50: "#e3f2fd",
+                100: "#bbdefb",
+                200: "#90caf9",
+                300: "#64b5f6",
+                400: "#42a5f5",
+                500: "#2196f3",
+                600: "#1e88e5",
+                700: "#1976d2",
+                800: "#1565c0",
+                900: "#0d47a1",
+              },
+              accent: {
+                50: "#e1f5fe",
+                100: "#b3e5fc",
+                200: "#81d4fa",
+                300: "#4fc3f7",
+                400: "#29b6f6",
+                500: "#03a9f4",
+                600: "#039be5",
+                700: "#0288d1",
+                800: "#0277bd",
+                900: "#01579b",
+              },
+            },
+          },
+        },
+      };
+    </script>
+    <style>
+      * {
+        cursor: none !important;
+      }
+
+      #cursor {
+        position: fixed;
+        width: 20px;
+        height: 20px;
+        border: 2px solid #2196f3;
+        border-radius: 50%;
+        pointer-events: none;
+        z-index: 9999;
+        transition: all 0.1s ease;
+        transform: translate(-50%, -50%);
+      }
+
+      #cursor-follower {
+        position: fixed;
+        width: 40px;
+        height: 40px;
+        border: 1px solid rgba(33, 150, 243, 0.3);
+        border-radius: 50%;
+        pointer-events: none;
+        z-index: 9998;
+        transition: all 0.15s ease;
+        transform: translate(-50%, -50%);
+      }
+
+      .cursor-hover #cursor {
+        width: 40px;
+        height: 40px;
+        background-color: rgba(33, 150, 243, 0.1);
+      }
+
+      .glass-nav {
+        backdrop-filter: blur(10px) saturate(180%);
+        background: rgba(255, 255, 255, 0.7);
+        border: 1px solid rgba(255, 255, 255, 0.18);
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+      }
+      .dark .glass-nav {
+        background: rgba(30, 30, 30, 0.7);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+      }
+
+      .glass-card {
+        backdrop-filter: blur(16px) saturate(180%);
+        background: rgba(255, 255, 255, 0.75);
+        border: 1px solid rgba(255, 255, 255, 0.18);
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+      }
+      .dark .glass-card {
+        background: rgba(40, 40, 40, 0.75);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+      }
+
+      .glass-button {
+        backdrop-filter: blur(12px) saturate(180%);
+        background: rgba(255, 255, 255, 0.6);
+        border: 1px solid rgba(255, 255, 255, 0.18);
+      }
+      .dark .glass-button {
+        background: rgba(50, 50, 50, 0.6);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+      }
+
+      .glass-button:hover {
+        background: rgba(255, 255, 255, 0.85);
+        transform: translateY(-2px);
+        box-shadow: 0 12px 24px rgba(0, 0, 0, 0.15);
+      }
+      .dark .glass-button:hover {
+        background: rgba(60, 60, 60, 0.85);
+      }
+
+      .hero-shape {
+        position: absolute;
+        right: 0;
+        top: 0;
+        bottom: 0;
+        width: 50%;
+        background: linear-gradient(
+          135deg,
+          #afeeee 0%,
+          #007fff 50%,
+          #03a9f4 100%
+        );
+        clip-path: ellipse(80% 100% at 100% 50%);
+        opacity: 0.9;
+      }
+      .dark .hero-shape {
+        background: linear-gradient(
+          135deg,
+          #1565c0 0%,
+          #1e88e5 50%,
+          #0277bd 100%
+        );
+      }
+      @media (max-width: 768px) {
+        .hero-shape {
+          width: 100%;
+          height: 50%;
+          clip-path: ellipse(100% 80% at 50% 100%);
+        }
+      }
+
+      body {
+        transition: background-color 0.3s ease, color 0.3s ease;
+      }
+
+      .liquid-button {
+        position: relative;
+        overflow: hidden;
+        transition: all 0.3s ease;
+      }
+      .liquid-button::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(
+          90deg,
+          transparent,
+          rgba(255, 255, 255, 0.3),
+          transparent
+        );
+        transition: left 0.5s ease;
+      }
+      .liquid-button:hover::before {
+        left: 100%;
+      }
+
+      .social-icon {
+        transition: all 0.3s ease;
+      }
+      .social-icon:hover {
+        transform: translateY(-4px) scale(1.1);
+      }
+
+      .hero-glass-button {
+        backdrop-filter: blur(16px) saturate(180%);
+        background: rgba(255, 255, 255, 0.85);
+        border: 2px solid rgba(255, 255, 255, 0.3);
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
+      }
+      .dark .hero-glass-button {
+        background: rgba(40, 40, 40, 0.85);
+        border: 2px solid rgba(255, 255, 255, 0.2);
+      }
+      .hero-glass-button:hover {
+        background: rgba(255, 255, 255, 0.95);
+        transform: translateY(-2px);
+        box-shadow: 0 12px 40px rgba(0, 0, 0, 0.2);
+      }
+      .dark .hero-glass-button:hover {
+        background: rgba(50, 50, 50, 0.95);
+      }
+
+      .hero-primary-button {
+        backdrop-filter: blur(16px) saturate(180%);
+        background: linear-gradient(135deg, #2196f3 0%, #1976d2 100%);
+        border: 2px solid rgba(255, 255, 255, 0.3);
+        box-shadow: 0 8px 32px rgba(33, 150, 243, 0.3);
+      }
+      .dark .hero-primary-button {
+        background: linear-gradient(135deg, #1e88e5 0%, #1565c0 100%);
+        border: 2px solid rgba(255, 255, 255, 0.2);
+      }
+      .hero-primary-button:hover {
+        background: linear-gradient(135deg, #1976d2 0%, #1565c0 100%);
+        transform: translateY(-2px);
+        box-shadow: 0 12px 40px rgba(33, 150, 243, 0.4);
+      }
+      .dark .hero-primary-button:hover {
+        background: linear-gradient(135deg, #1565c0 0%, #0d47a1 100%);
+      }
+    </style>
+  </head>
+  <body
+    class="bg-gradient-to-br from-gray-50 to-blue-50 text-gray-900 dark:from-gray-900 dark:to-gray-800 dark:text-gray-100"
+  >
+    <div id="cursor"></div>
+    <div id="cursor-follower"></div>
+
+    <header
+      class="fixed top-4 left-1/2 -translate-x-1/2 z-50 w-[95%] max-w-4xl"
+    >
+      <div
+        class="glass-nav rounded-full px-6 py-3 flex items-center justify-between"
+      >
+        <a href="#" class="font-semibold tracking-tight"
+          >Vishal<span class="text-primary-600">.</span></a
+        >
+        <nav class="hidden sm:flex gap-8 text-sm">
+          <a href="#about" class="hover:text-primary-600 transition-colors"
+            >About</a
+          >
+          <a href="#experience" class="hover:text-primary-600 transition-colors"
+            >Experience</a
+          >
+          <a href="#projects" class="hover:text-primary-600 transition-colors"
+            >Projects</a
+          >
+          <a href="#skills" class="hover:text-primary-600 transition-colors"
+            >Skills</a
+          >
+          <a href="#contact" class="hover:text-primary-600 transition-colors"
+            >Contact</a
+          >
+        </nav>
+        <div class="flex items-center gap-3">
+          <button
+            id="themeToggle"
+            class="p-2 rounded-full glass-button transition-all flex items-center justify-center"
+            aria-label="Toggle dark mode"
+          >
+            <svg
+              id="sun"
+              xmlns="http://www.w3.org/2000/svg"
+              class="h-5 w-5 hidden dark:block"
+              viewBox="0 0 24 24"
+              fill="currentColor"
+            >
+              <path
+                d="M6.8 4.6 5.4 3.2 3.2 5.4l1.4 1.4 2.2-2.2ZM12 2h-0a1 1 0 0 0-1 1v2a1 1 0 1 0 2 0V3a1 1 0 0 0-1-1Zm7.8 3.4-2.2 2.2 1.4 1.4 2.2-2.2-1.4-1.4ZM21 11h-2a1 1 0 1 0 0 2h2a1 1 0 1 0 0-2ZM12 19a1 1 0 0 0-1 1v2a1 1 0 1 0 2 0v-2a1 1 0 0 0-1-1Zm-7.8-2.4-1.4 1.4 2.2 2.2 1.4-1.4-2.2-2.2ZM5 12a1 1 0 0 0-1-1H2a1 1 0 1 0 0 2h2a1 1 0 0 0 1-1Zm13.2 6.6-2.2-2.2-1.4 1.4 2.2 2.2 1.4-1.4ZM12 7a5 5 0 1 0 0 10A5 5 0 0 0 12 7Z"
+              />
+            </svg>
+            <svg
+              id="moon"
+              xmlns="http://www.w3.org/2000/svg"
+              class="h-5 w-5 block dark:hidden"
+              viewBox="0 0 25 20"
+              fill="currentColor"
+            >
+              <path d="M21 12.8A9 9 0 0 1 11.2 3 7.5 7.5 0 1 0 21 12.8Z" />
+            </svg>
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <section class="relative overflow-hidden pt-14 min-h-screen">
+      <div class="hero-shape"></div>
+      <div
+        class="mx-auto max-w-7xl grid md:grid-cols-2 min-h-[calc(100vh-5rem)] relative z-10"
+      >
+        <div
+          class="px-6 md:px-12 lg:px-16 py-16 flex flex-col justify-center order-2 md:order-1"
+        >
+          <div
+            class="text-sm font-semibold text-primary-600 dark:text-primary-400 mb-4 tracking-wide uppercase"
+          >
+            Full Stack Developer
+          </div>
+          <h1 class="text-4xl sm:text-6xl font-extrabold leading-tight">
+            Hello, my name is
+            <span class="text-primary-600">Vishal Chavan</span>
+          </h1>
+          <p class="mt-6 text-lg text-gray-600 dark:text-gray-300 max-w-lg">
+            I build accessible, responsive web applications using React, Node,
+            and Python — from concept to deployment.
+          </p>
+          <div class="mt-8 flex flex-wrap gap-4">
+            <a
+              href="mailto:vishal242392@gmail.com?subject=Hiring%20Inquiry"
+              class="liquid-button border-[2px] border-blue-400 hero-glass-button inline-flex items-center gap-2 rounded-full px-6 py-3 font-semibold text-gray-900 dark:text-gray-100"
+              aria-label="Hire me via email"
+            >
+              Hire Me
+            </a>
+          </div>
+
+          <div class="mt-6 flex flex-wrap gap-4">
+            <a
+              href="https://www.linkedin.com/in/vishal--chavan/"
+              target="_blank"
+              rel="noopener"
+              class="liquid-button border-[0.5px] border-blue-900 inline-flex items-center gap-2 rounded-full px-5 py-2.5 glass-button hover:shadow-lg text-sm font-medium social-icon"
+              aria-label="Open LinkedIn in new tab"
+            >
+              <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                <path
+                  d="M20.5 2h-17A1.5 1.5 0 002 3.5v17A1.5 1.5 0 003.5 22h17a1.5 1.5 0 001.5-1.5v-17A1.5 1.5 0 0020.5 2zM8 19H5v-9h3zM6.5 8.25A1.75 1.75 0 118.3 6.5a1.78 1.78 0 01-1.8 1.75zM19 19h-3v-4.74c0-1.42-.6-1.93-1.38-1.93A1.74 1.74 0 0013 14.19a.66.66 0 000 .14V19h-3v-9h2.9v1.3a3.11 3.11 0 012.7-1.4c1.55 0 3.36.86 3.36 3.66z"
+                />
+              </svg>
+              LinkedIn
+            </a>
+            <a
+              href="https://x.com/Vishalchavan_ai"
+              target="_blank"
+              rel="noopener"
+              class="liquid-button border-[0.5px] border-blue-900 inline-flex items-center gap-2 rounded-full px-5 py-2.5 glass-button hover:shadow-lg text-sm font-medium social-icon"
+              aria-label="Open X profile in new tab"
+            >
+              <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                <path
+                  d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"
+                />
+              </svg>
+            </a>
+            <a
+              href="https://github.com/VishalChavan7"
+              target="_blank"
+              rel="noopener"
+              class="liquid-button border-[0.5px] border-blue-900 inline-flex items-center gap-2 rounded-full px-5 py-2.5 glass-button hover:shadow-lg text-sm font-medium social-icon"
+              aria-label="Open GitHub in new tab"
+            >
+              <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                <path
+                  d="M12 .5A12 12 0 0 0 0 12.6c0 5.3 3.4 9.8 8.2 11.4.6.1.8-.2.8-.5v-2c-3.3.8-4-1.5-4-1.5-.6-1.4-1.3-1.8-1.3-1.8-1-.7.1-.7.1-.7 1.2.1 1.8 1.2 1.8 1.2 1 1.8 2.7 1.3 3.4 1 .1-.7.4-1.3.7-1.6-2.6-.3-5.4-1.4-5.4-6.1 0-1.3.5-2.3 1.2-3.2 0-.3-.5-1.5.1-3.1 0 0 1-.3 3.2 1.2a11 11 0 0 1 5.8 0c2.2-1.5 3.2-1.2 3.2-1.2.6 1.6.1 2.8.1 3.1.8.9 1.2 1.9 1.2 3.2 0 4.7-2.8 5.8-5.4 6.1.4.3.8 1 .8 2.1v3.1c0 .3.2.6.8.5A12 12 0 0 0 24 12.6 12 12 0 0 0 12 .5Z"
+                />
+              </svg>
+              GitHub
+            </a>
+
+            <!-- RESUME BUTTON (opens in new tab) -->
+            <a
+              id="resumeLink"
+              href="/assets/Vishal-Chavan-Resume.pdf"
+              target="_blank"
+              rel="noopener"
+              class="liquid-button border-[0.5px] border-blue-900 inline-flex items-center gap-2 rounded-full px-5 py-2.5 glass-button hover:shadow-lg text-sm font-medium social-icon"
+              aria-label="Open resume in new tab"
+            >
+              <svg
+                class="w-5 h-5"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
+                />
+              </svg>
+              Resume
+            </a>
+          </div>
+        </div>
+
+        <div
+          class="relative h-full min-h-[500px] md:min-h-[calc(100vh-5rem)] order-1 md:order-2 flex items-center justify-center p-8"
+        >
+          <div class="relative w-full max-w-md aspect-square">
+            <div
+              class="absolute inset-0 rounded-full bg-gradient-to-br from-primary-400 to-accent-600 opacity-20 blur-3xl"
+            ></div>
+            <img
+              src="assets/profile.jpg"
+              alt="Vishal Chavan headset"
+              class="relative rounded-full w-full h-full object-cover shadow-2xl border-8 border-white dark:border-gray-800"
+            />
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="about" class="mx-auto max-w-6xl px-6 py-20">
+      <h2 class="text-3xl font-bold">About Me</h2>
+      <header>
+        <h2 class="mt-6 text-lg text-gray-700 dark:text-gray-300">
+          <strong>Vishal Chavan</strong> • Nagpur, Maharashtra
+        </h2>
+      </header>
+
+      <article class="text-gray-700 dark:text-gray-300">
+        <p class="mt-6">
+          I’m a recent Electronics Engineering graduate from Shri Ramdeobaba
+          College of Engineering and Management, passionate about creating
+          meaningful and impactful experiences.
+        </p>
+        <p class="mt-6">
+          In early 2025, I worked at Delaplex Ltd as a Frontend Developer &amp;
+          UI/UX Designer, where I contributed to several exciting projects and
+          learned how creativity and structure come together to build great
+          products.
+        </p>
+        <p class="mt-6">
+          During my college years, I served as the System Head of the Robotics
+          &amp; Aviation Club and achieved 1st place at the district level and
+          5th place at the state level in chess tournaments.
+        </p>
+        <p class="mt-6">
+          Outside of work, I enjoy playing chess and reading books. These
+          hobbies keep me grounded, improve my focus, and inspire new ideas.
+        </p>
+        <p class="mt-6">
+          You can explore more about me and my journey on
+          <a
+            href="https://github.com/VishalChavan7"
+            target="_blank"
+            rel="noopener"
+            class="text-blue-600 hover:underline"
+            >GitHub</a
+          >
+          &amp;
+          <a
+            href="https://www.linkedin.com/in/vishal--chavan/"
+            target="_blank"
+            rel="noopener"
+            class="text-blue-600 hover:underline"
+            >LinkedIn</a
+          >.
+        </p>
+      </article>
+    </section>
+
+    <section id="experience" class="mx-auto max-w-6xl px-6 py-20">
+      <h2 class="text-3xl font-bold">Experience</h2>
+      <div class="mt-8 grid gap-6">
+        <article class="glass-card rounded-3xl p-8 shadow-md">
+          <div class="flex items-baseline justify-between gap-4 flex-wrap">
+            <h3 class="text-xl font-semibold">
+              Frontend Developer & UI/UX Designer — Delaplex Ltd.
+            </h3>
+            <span class="text-sm text-gray-500"
+              >Jan 2025 – Jun 2025 · Nagpur, India</span
+            >
+          </div>
+          <p class="mt-4 text-gray-700 dark:text-gray-300">
+            <strong>Kaptize.ai</strong> — AI knowledge platform.
+          </p>
+          <ul
+            class="mt-3 list-disc ml-6 text-gray-700 dark:text-gray-300 space-y-2"
+          >
+            <li>
+              Shipped 40+ responsive screens (Figma → code) with dynamic,
+              role-based components.
+            </li>
+            <li>
+              Integrated Razorpay; implemented auth & RBAC; built HOCs for
+              reuse.
+            </li>
+            <li>
+              Stack: React, JS, Tailwind, Material UI, Redux, Gemini API, Framer
+              Motion.
+            </li>
+          </ul>
+          <p class="mt-6 text-gray-700 dark:text-gray-300">
+            <strong>Assist.ai</strong> — AI learning assistant.
+          </p>
+          <ul
+            class="mt-3 list-disc ml-6 text-gray-700 dark:text-gray-300 space-y-2"
+          >
+            <li>
+              Built Gemini-powered assistant + speech-to-text & TTS (≈98%
+              accuracy).
+            </li>
+            <li>
+              RBAC, conditional rendering, smooth animations with Framer Motion.
+            </li>
+            <li>Stack: React, TypeScript, Tailwind, Redux, Web Speech APIs.</li>
+          </ul>
+        </article>
+      </div>
+    </section>
+
+    <section id="projects" class="mx-auto max-w-6xl px-6 py-20">
+      <div class="flex items-center justify-between">
+        <h2 class="text-3xl font-bold">Featured Projects</h2>
+        <a
+          href="https://github.com/VishalChavan7"
+          target="_blank"
+          class="text-sm text-primary-600 dark:text-primary-400 hover:underline"
+          >See all on GitHub →</a
+        >
+      </div>
+      <div class="mt-8 grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        <a
+          href="https://vishalchavan7.github.io/spacex-mission-explorer"
+          target="_blank"
+          class="group glass-card rounded-3xl p-6 hover:shadow-xl transition-all"
+        >
+          <div class="flex items-center justify-between">
+            <h3 class="text-lg font-semibold">SpaceX Mission Explorer</h3>
+            <span
+              class="text-xs px-3 py-1 rounded-full bg-accent-100 dark:bg-accent-900/40 text-accent-700 dark:text-accent-300"
+              >Frontend</span
+            >
+          </div>
+          <p class="mt-3 text-sm text-gray-600 dark:text-gray-400">
+            A tiny, modern React app to browse SpaceX missions using the public
+            v4 API.
+          </p>
+          <p class="mt-4 text-xs text-gray-500">React · Tailwind · API v4</p>
+        </a>
+
+        <a
+          href="https://github.com/VishalChavan7/url_shortener"
+          target="_blank"
+          class="group glass-card rounded-3xl p-6 hover:shadow-xl transition-all"
+        >
+          <div class="flex items-center justify-between">
+            <h3 class="text-lg font-semibold">URL Shortener</h3>
+            <span
+              class="text-xs px-3 py-1 rounded-full bg-primary-100 dark:bg-primary-900/40 text-primary-700 dark:text-primary-300"
+              >Full-stack</span
+            >
+          </div>
+          <p class="mt-3 text-sm text-gray-600 dark:text-gray-400">
+            A Python Flask-based URL Shortener that shortens long URLs.
+          </p>
+          <p class="mt-4 text-xs text-gray-500">
+            Python · Flask · SQLite · Jinja2 templates
+          </p>
+        </a>
+
+        <a
+          href="https://github.com/VishalChavan7/Checkmate"
+          target="_blank"
+          class="group glass-card rounded-3xl p-6 hover:shadow-xl transition-all"
+        >
+          <div class="flex items-center justify-between">
+            <h3 class="text-lg font-semibold">Checkmate</h3>
+            <span
+              class="text-xs px-3 py-1 rounded-full bg-accent-100 dark:bg-accent-900/40 text-accent-700 dark:text-accent-300"
+              >Realtime</span
+            >
+          </div>
+          <p class="mt-3 text-sm text-gray-600 dark:text-gray-400">
+            Online multiplayer chess with WebSockets, session recovery, and
+            mobile-first UI.
+          </p>
+          <p class="mt-4 text-xs text-gray-500">
+            Node · Express · Socket.io · Chess.js · HTML · CSS
+          </p>
+        </a>
+
+        <a
+          href="https://wander-lodge.onrender.com"
+          target="_blank"
+          class="group glass-card rounded-3xl p-6 hover:shadow-xl transition-all"
+        >
+          <div class="flex items-center justify-between">
+            <h3 class="text-lg font-semibold">WanderLodge</h3>
+            <span
+              class="text-xs px-3 py-1 rounded-full bg-primary-100 dark:bg-primary-900/40 text-primary-700 dark:text-primary-300"
+              >Full-stack</span
+            >
+          </div>
+          <p class="mt-3 text-sm text-gray-600 dark:text-gray-400">
+            Hotel booking platform with auth, listings, real-time booking, and
+            Mapbox maps.
+          </p>
+          <p class="mt-4 text-xs text-gray-500">
+            React · Node · Express · MongoDB · Tailwind · Passport · Multer ·
+            Cloudinary · Mapbox
+          </p>
+        </a>
+
+        <a
+          href="https://github.com/VishalChavan7/Neatify"
+          target="_blank"
+          class="group glass-card rounded-3xl p-6 hover:shadow-xl transition-all"
+        >
+          <div class="flex items-center justify-between">
+            <h3 class="text-lg font-semibold">Neatify</h3>
+            <span
+              class="text-xs px-3 py-1 rounded-full bg-primary-100 dark:bg-primary-900/40 text-primary-700 dark:text-primary-300"
+              >Automation</span
+            >
+          </div>
+          <p class="mt-3 text-sm text-gray-600 dark:text-gray-400">
+            Automatically sorts downloaded files into subfolders based on their
+            extensions.
+          </p>
+          <p class="mt-4 text-xs text-gray-500">Python · Watchdog</p>
+        </a>
+      </div>
+    </section>
+
+    <section id="skills" class="mx-auto max-w-6xl px-6 py-20">
+      <h2 class="text-3xl font-bold">Skills</h2>
+      <div class="mt-8 grid sm:grid-cols-2 lg:grid-cols-3 gap-6 text-sm">
+        <div class="glass-card rounded-3xl p-6 shadow-md">
+          <h3 class="font-semibold text-lg mb-3">Frontend</h3>
+          <p class="text-gray-700 dark:text-gray-300">
+            HTML, CSS, Tailwind, JavaScript, TypeScript, React, EJS
+          </p>
+        </div>
+        <div class="glass-card rounded-3xl p-6 shadow-md">
+          <h3 class="font-semibold text-lg mb-3">Backend</h3>
+          <p class="text-gray-700 dark:text-gray-300">
+            Python, Flask, Node.js, Express
+          </p>
+        </div>
+        <div class="glass-card rounded-3xl p-6 shadow-md">
+          <h3 class="font-semibold text-lg mb-3">Databases</h3>
+          <p class="text-gray-700 dark:text-gray-300">MongoDB, MySQL, SQLite</p>
+        </div>
+        <div class="glass-card rounded-3xl p-6 shadow-md">
+          <h3 class="font-semibold text-lg mb-3">Tools</h3>
+          <p class="text-gray-700 dark:text-gray-300">
+            Figma, Git/GitHub, Passport, Socket.io, Stripe, Multer, Cloudinary,
+            Mapbox, Render
+          </p>
+        </div>
+        <div class="glass-card rounded-3xl p-6 shadow-md">
+          <h3 class="font-semibold text-lg mb-3">Foundations</h3>
+          <p class="text-gray-700 dark:text-gray-300">
+            OOP, Networking, OS, DBMS, DSA (Java), Linux
+          </p>
+        </div>
+        <div class="glass-card rounded-3xl p-6 shadow-md">
+          <h3 class="font-semibold text-lg mb-3">Certifications</h3>
+          <p class="text-gray-700 dark:text-gray-300">
+            Cisco (Networking, OS), Google (Foundations of UX Design)
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section id="contact" class="mx-auto max-w-6xl px-6 py-20">
+      <h2 class="text-3xl font-bold">Contact</h2>
+      <div class="mt-8 grid lg:grid-cols-2 gap-8">
+        <div class="glass-card rounded-3xl p-8 shadow-md space-y-6">
+          <div>
+            <label class="block text-sm font-medium mb-2">Your Name</label>
+            <input
+              type="text"
+              class="w-full rounded-2xl border border-gray-300 dark:border-gray-700 bg-white/50 dark:bg-gray-800/50 px-4 py-3 focus:outline-none focus:ring-2 focus:ring-primary-500"
+              placeholder="John Doe"
+            />
+          </div>
+          <div>
+            <label class="block text-sm font-medium mb-2">Email</label>
+            <input
+              type="email"
+              class="w-full rounded-2xl border border-gray-300 dark:border-gray-700 bg-white/50 dark:bg-gray-800/50 px-4 py-3 focus:outline-none focus:ring-2 focus:ring-primary-500"
+              placeholder="john@example.com"
+            />
+          </div>
+          <div>
+            <label class="block text-sm font-medium mb-2">Message</label>
+            <textarea
+              rows="5"
+              class="w-full rounded-2xl border border-gray-300 dark:border-gray-700 bg-white/50 dark:bg-gray-800/50 px-4 py-3 focus:outline-none focus:ring-2 focus:ring-primary-500"
+              placeholder="Your message..."
+            ></textarea>
+          </div>
+          <button
+            class="liquid-button w-full rounded-full px-6 py-3 bg-primary-600 text-white hover:bg-primary-700 shadow-lg transition-all"
+          >
+            Send
+          </button>
+        </div>
+
+        <div class="flex items-center justify-center">
+          <div class="w-full max-w-md transform translate-x-16 -translate-y-4">
+            <svg viewBox="0 0 400 400" class="w-full h-auto">
+              <defs>
+                <linearGradient id="grad1" x1="0%" y1="0%" x2="100%" y2="100%">
+                  <stop
+                    offset="0%"
+                    style="stop-color: #2196f3; stop-opacity: 1"
+                  />
+                  <stop
+                    offset="100%"
+                    style="stop-color: #03a9f4; stop-opacity: 1"
+                  />
+                </linearGradient>
+                <linearGradient id="grad2" x1="0%" y1="0%" x2="100%" y2="0%">
+                  <stop
+                    offset="0%"
+                    style="stop-color: #64b5f6; stop-opacity: 0.8"
+                  />
+                  <stop
+                    offset="100%"
+                    style="stop-color: #4fc3f7; stop-opacity: 0.8"
+                  />
+                </linearGradient>
+              </defs>
+
+              <circle
+                cx="200"
+                cy="200"
+                r="120"
+                fill="url(#grad1)"
+                opacity="0.2"
+              >
+                <animate
+                  attributeName="r"
+                  values="120;130;120"
+                  dur="3s"
+                  repeatCount="indefinite"
+                />
+              </circle>
+
+              <circle cx="200" cy="200" r="90" fill="url(#grad2)" opacity="0.3">
+                <animate
+                  attributeName="r"
+                  values="90;100;90"
+                  dur="2s"
+                  repeatCount="indefinite"
+                />
+              </circle>
+
+              <path
+                d="M200,120 L200,80 M200,320 L200,280 M120,200 L80,200 M320,200 L280,200"
+                stroke="url(#grad1)"
+                stroke-width="3"
+                stroke-linecap="round"
+              >
+                <animateTransform
+                  attributeName="transform"
+                  type="rotate"
+                  from="0 200 200"
+                  to="360 200 200"
+                  dur="20s"
+                  repeatCount="indefinite"
+                />
+              </path>
+
+              <circle cx="200" cy="200" r="15" fill="url(#grad1)">
+                <animate
+                  attributeName="opacity"
+                  values="1;0.5;1"
+                  dur="2s"
+                  repeatCount="indefinite"
+                />
+              </circle>
+
+              <g>
+                <circle cx="150" cy="150" r="8" fill="#2196f3">
+                  <animateTransform
+                    attributeName="transform"
+                    type="rotate"
+                    from="0 200 200"
+                    to="360 200 200"
+                    dur="8s"
+                    repeatCount="indefinite"
+                  />
+                </circle>
+                <circle cx="250" cy="150" r="8" fill="#03a9f4">
+                  <animateTransform
+                    attributeName="transform"
+                    type="rotate"
+                    from="0 200 200"
+                    to="360 200 200"
+                    dur="10s"
+                    repeatCount="indefinite"
+                  />
+                </circle>
+                <circle cx="250" cy="250" r="8" fill="#64b5f6">
+                  <animateTransform
+                    attributeName="transform"
+                    type="rotate"
+                    from="0 200 200"
+                    to="360 200 200"
+                    dur="12s"
+                    repeatCount="indefinite"
+                  />
+                </circle>
+                <circle cx="150" cy="250" r="8" fill="#4fc3f7">
+                  <animateTransform
+                    attributeName="transform"
+                    type="rotate"
+                    from="0 200 200"
+                    to="360 200 200"
+                    dur="14s"
+                    repeatCount="indefinite"
+                  />
+                </circle>
+              </g>
+
+              <path
+                d="M200,140 Q220,160 200,180 Q180,160 200,140"
+                fill="none"
+                stroke="url(#grad1)"
+                stroke-width="2"
+              >
+                <animateTransform
+                  attributeName="transform"
+                  type="rotate"
+                  from="0 200 200"
+                  to="-360 200 200"
+                  dur="15s"
+                  repeatCount="indefinite"
+                />
+              </path>
+
+              <text
+                x="200"
+                y="360"
+                text-anchor="middle"
+                font-size="20"
+                fill="currentColor"
+                class="font-semibold"
+              >
+                Let's Connect!
+              </text>
+            </svg>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <script>
+      // Custom cursor
+      const cursor = document.getElementById("cursor");
+      const cursorFollower = document.getElementById("cursor-follower");
+      let mouseX = 0,
+        mouseY = 0,
+        cursorX = 0,
+        cursorY = 0,
+        followerX = 0,
+        followerY = 0;
+
+      document.addEventListener("mousemove", (e) => {
+        mouseX = e.clientX;
+        mouseY = e.clientY;
+      });
+
+      function animateCursor() {
+        const speed = 0.2,
+          followerSpeed = 0.1;
+        cursorX += (mouseX - cursorX) * speed;
+        cursorY += (mouseY - cursorY) * speed;
+        followerX += (mouseX - followerX) * followerSpeed;
+        followerY += (mouseY - followerY) * followerSpeed;
+        cursor.style.left = cursorX + "px";
+        cursor.style.top = cursorY + "px";
+        cursorFollower.style.left = followerX + "px";
+        cursorFollower.style.top = followerY + "px";
+        requestAnimationFrame(animateCursor);
+      }
+      animateCursor();
+
+      // Hover grow effect
+      const interactiveElements = document.querySelectorAll(
+        "a, button, input, textarea"
+      );
+      interactiveElements.forEach((el) => {
+        el.addEventListener("mouseenter", () =>
+          document.body.classList.add("cursor-hover")
+        );
+        el.addEventListener("mouseleave", () =>
+          document.body.classList.remove("cursor-hover")
+        );
+      });
+
+      // Theme toggle persistence
+      const htmlElement = document.documentElement;
+      const themeToggle = document.getElementById("themeToggle");
+
+      function initTheme() {
+        const savedTheme = localStorage.getItem("theme");
+        const systemPrefersDark = window.matchMedia(
+          "(prefers-color-scheme: dark)"
+        ).matches;
+        if (savedTheme === "dark" || (!savedTheme && systemPrefersDark))
+          htmlElement.classList.add("dark");
+        else htmlElement.classList.remove("dark");
+      }
+      initTheme();
+
+      themeToggle.addEventListener("click", () => {
+        htmlElement.classList.toggle("dark");
+        const newTheme = htmlElement.classList.contains("dark")
+          ? "dark"
+          : "light";
+        localStorage.setItem("theme", newTheme);
+      });
+
+      // Optional: if you deploy with a different resume path, set it here:
+      // Example: const resumeUrl = "/assets/Vishal-Chavan-Resume.pdf";
+      const resumeUrl = "/assets/Vishal-Chavan-Resume.pdf"; // keep file next to this HTML
+      const resumeLink = document.getElementById("resumeLink");
+      resumeLink.setAttribute("href", resumeUrl);
+      resumeLink.setAttribute("target", "_blank");
+      resumeLink.setAttribute("rel", "noopener");
+    </script>
+  </body>
+</html>
