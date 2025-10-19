@@ -49,8 +49,21 @@
       };
     </script>
     <style>
-      * {
-        cursor: none !important;
+      /* Only hide the cursor on devices that actually have hover */
+      @media (hover: hover) and (pointer: fine) {
+        * {
+          cursor: none !important;
+        }
+        #cursor,
+        #cursor-follower {
+          display: block;
+        }
+      }
+      @media (hover: none), (pointer: coarse) {
+        #cursor,
+        #cursor-follower {
+          display: none !important;
+        }
       }
 
       #cursor {
@@ -114,7 +127,6 @@
         background: rgba(50, 50, 50, 0.6);
         border: 1px solid rgba(255, 255, 255, 0.1);
       }
-
       .glass-button:hover {
         background: rgba(255, 255, 255, 0.85);
         transform: translateY(-2px);
@@ -150,8 +162,8 @@
       @media (max-width: 768px) {
         .hero-shape {
           width: 100%;
-          height: 50%;
-          clip-path: ellipse(100% 80% at 50% 100%);
+          height: 40%;
+          clip-path: ellipse(100% 80% at 50% 0%);
         }
       }
 
@@ -230,21 +242,24 @@
     </style>
   </head>
   <body
-    class="bg-gradient-to-br from-gray-50 to-blue-50 text-gray-900 dark:from-gray-900 dark:to-gray-800 dark:text-gray-100"
+    class="overflow-x-hidden bg-gradient-to-br from-gray-50 to-blue-50 text-gray-900 dark:from-gray-900 dark:to-gray-800 dark:text-gray-100"
   >
     <div id="cursor"></div>
     <div id="cursor-follower"></div>
 
+    <!-- HEADER -->
     <header
       class="fixed top-4 left-1/2 -translate-x-1/2 z-50 w-[95%] max-w-4xl"
     >
       <div
-        class="glass-nav rounded-full px-6 py-3 flex items-center justify-between"
+        class="glass-nav rounded-full px-4 sm:px-6 py-3 flex items-center justify-between"
       >
         <a href="#" class="font-semibold tracking-tight"
           >Vishal<span class="text-primary-600">.</span></a
         >
-        <nav class="hidden sm:flex gap-8 text-sm">
+
+        <!-- Desktop nav -->
+        <nav class="hidden sm:flex gap-6 md:gap-8 text-sm">
           <a href="#about" class="hover:text-primary-600 transition-colors"
             >About</a
           >
@@ -261,75 +276,156 @@
             >Contact</a
           >
         </nav>
-        <div class="flex items-center gap-3">
+
+        <div class="flex items-center gap-2">
+          <!-- Theme toggle -->
           <button
             id="themeToggle"
-            class="p-2 rounded-full glass-button transition-all flex items-center justify-center"
+            class="h-10 w-10 flex items-center justify-center rounded-full glass-button transition-all text-gray-900 dark:text-gray-100"
             aria-label="Toggle dark mode"
           >
+            <!-- Sun icon -->
             <svg
               id="sun"
               xmlns="http://www.w3.org/2000/svg"
               class="h-5 w-5 hidden dark:block"
-              viewBox="0 0 24 24"
               fill="currentColor"
+              viewBox="0 0 24 24"
             >
               <path
-                d="M6.8 4.6 5.4 3.2 3.2 5.4l1.4 1.4 2.2-2.2ZM12 2h-0a1 1 0 0 0-1 1v2a1 1 0 1 0 2 0V3a1 1 0 0 0-1-1Zm7.8 3.4-2.2 2.2 1.4 1.4 2.2-2.2-1.4-1.4ZM21 11h-2a1 1 0 1 0 0 2h2a1 1 0 1 0 0-2ZM12 19a1 1 0 0 0-1 1v2a1 1 0 1 0 2 0v-2a1 1 0 0 0-1-1Zm-7.8-2.4-1.4 1.4 2.2 2.2 1.4-1.4-2.2-2.2ZM5 12a1 1 0 0 0-1-1H2a1 1 0 1 0 0 2h2a1 1 0 0 0 1-1Zm13.2 6.6-2.2-2.2-1.4 1.4 2.2 2.2 1.4-1.4ZM12 7a5 5 0 1 0 0 10A5 5 0 0 0 12 7Z"
+                d="M6.8 4.6 5.4 3.2 3.2 5.4l1.4 1.4 2.2-2.2ZM12 2a1 1 0 0 0-1 1v2a1 1 0 1 0 2 0V3a1 1 0 0 0-1-1Zm7.8 3.4-2.2 2.2 1.4 1.4 2.2-2.2-1.4-1.4ZM21 11h-2a1 1 0 1 0 0 2h2a1 1 0 1 0 0-2ZM12 19a1 1 0 0 0-1 1v2a1 1 0 1 0 2 0v-2a1 1 0 0 0-1-1Zm-7.8-2.4-1.4 1.4 2.2 2.2 1.4-1.4-2.2-2.2ZM5 12a1 1 0 0 0-1-1H2a1 1 0 1 0 0 2h2a1 1 0 0 0 1-1Zm13.2 6.6-2.2-2.2-1.4 1.4 2.2 2.2 1.4-1.4ZM12 7a5 5 0 1 0 0 10A5 5 0 0 0 12 7Z"
               />
             </svg>
+
+            <!-- Moon icon -->
             <svg
               id="moon"
               xmlns="http://www.w3.org/2000/svg"
               class="h-5 w-5 block dark:hidden"
-              viewBox="0 0 25 20"
               fill="currentColor"
+              viewBox="0 0 25 20"
             >
               <path d="M21 12.8A9 9 0 0 1 11.2 3 7.5 7.5 0 1 0 21 12.8Z" />
             </svg>
           </button>
+
+          <!-- Mobile menu button -->
+          <button
+            id="mobileMenuBtn"
+            class="h-10 w-10 flex items-center justify-center rounded-full glass-button transition-all text-gray-900 dark:text-gray-100 sm:hidden"
+            aria-label="Open menu"
+            aria-expanded="false"
+            aria-controls="mobileMenu"
+          >
+            <!-- Menu icon -->
+            <svg
+              id="iconMenu"
+              class="h-6 w-6 block"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+            >
+              <path stroke-linecap="round" d="M4 6h16M4 12h16M4 18h16" />
+            </svg>
+            <!-- Close icon -->
+            <svg
+              id="iconClose"
+              class="h-6 w-6 hidden"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M6 18L18 6M6 6l12 12"
+              />
+            </svg>
+          </button>
         </div>
       </div>
+
+      <!-- Mobile dropdown -->
+      <nav
+        id="mobileMenu"
+        class="sm:hidden mt-2 hidden w-full max-w-4xl mx-auto"
+      >
+        <div class="glass-nav rounded-3xl px-4 py-3">
+          <div class="flex flex-col gap-2 text-sm">
+            <a
+              href="#about"
+              class="py-2 px-3 rounded-xl hover:bg-black/5 dark:hover:bg-white/10"
+              >About</a
+            >
+            <a
+              href="#experience"
+              class="py-2 px-3 rounded-xl hover:bg-black/5 dark:hover:bg-white/10"
+              >Experience</a
+            >
+            <a
+              href="#projects"
+              class="py-2 px-3 rounded-xl hover:bg-black/5 dark:hover:bg-white/10"
+              >Projects</a
+            >
+            <a
+              href="#skills"
+              class="py-2 px-3 rounded-xl hover:bg-black/5 dark:hover:bg-white/10"
+              >Skills</a
+            >
+            <a
+              href="#contact"
+              class="py-2 px-3 rounded-xl hover:bg-black/5 dark:hover:bg-white/10"
+              >Contact</a
+            >
+          </div>
+        </div>
+      </nav>
     </header>
 
-    <section class="relative overflow-hidden pt-14 min-h-screen">
+    <!-- HERO -->
+    <section class="relative overflow-hidden pt-24 sm:pt-28 min-h-[90vh]">
       <div class="hero-shape"></div>
       <div
-        class="mx-auto max-w-7xl grid md:grid-cols-2 min-h-[calc(100vh-5rem)] relative z-10"
+        class="mx-auto max-w-7xl grid grid-cols-1 md:grid-cols-2 min-h-[calc(100vh-7rem)] relative z-10"
       >
         <div
-          class="px-6 md:px-12 lg:px-16 py-16 flex flex-col justify-center order-2 md:order-1"
+          class="px-5 sm:px-8 md:px-12 lg:px-16 py-12 sm:py-16 flex flex-col justify-center order-2 md:order-1"
         >
           <div
-            class="text-sm font-semibold text-primary-600 dark:text-primary-400 mb-4 tracking-wide uppercase"
+            class="text-xs sm:text-sm font-semibold text-primary-600 dark:text-primary-400 mb-3 sm:mb-4 tracking-wide uppercase"
           >
             Full Stack Developer
           </div>
-          <h1 class="text-4xl sm:text-6xl font-extrabold leading-tight">
+          <h1
+            class="text-3xl sm:text-5xl md:text-6xl font-extrabold leading-tight"
+          >
             Hello, my name is
             <span class="text-primary-600">Vishal Chavan</span>
           </h1>
-          <p class="mt-6 text-lg text-gray-600 dark:text-gray-300 max-w-lg">
+          <p
+            class="mt-4 sm:mt-6 text-base sm:text-lg text-gray-600 dark:text-gray-300 max-w-xl"
+          >
             I build accessible, responsive web applications using React, Node,
             and Python — from concept to deployment.
           </p>
-          <div class="mt-8 flex flex-wrap gap-4">
+          <div class="mt-6 sm:mt-8 flex flex-wrap gap-3 sm:gap-4">
             <a
               href="mailto:vishal242392@gmail.com?subject=Hiring%20Inquiry"
-              class="liquid-button border-[2px] border-blue-400 hero-glass-button inline-flex items-center gap-2 rounded-full px-6 py-3 font-semibold text-gray-900 dark:text-gray-100"
+              class="liquid-button border-[2px] border-blue-400 hero-glass-button inline-flex items-center justify-center gap-2 rounded-full px-5 sm:px-6 py-3 font-semibold text-gray-900 dark:text-gray-100 w-full xs:w-auto sm:w-auto"
               aria-label="Hire me via email"
             >
               Hire Me
             </a>
           </div>
 
-          <div class="mt-6 flex flex-wrap gap-4">
+          <div class="mt-5 sm:mt-6 flex flex-wrap gap-3 sm:gap-4">
             <a
               href="https://www.linkedin.com/in/vishal--chavan/"
               target="_blank"
               rel="noopener"
-              class="liquid-button border-[0.5px] border-blue-900 inline-flex items-center gap-2 rounded-full px-5 py-2.5 glass-button hover:shadow-lg text-sm font-medium social-icon"
-              aria-label="Open LinkedIn in new tab"
+              class="liquid-button border-[0.5px] border-blue-900 inline-flex items-center gap-2 rounded-full px-4 sm:px-5 py-2.5 glass-button hover:shadow-lg text-sm font-medium social-icon"
             >
               <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
                 <path
@@ -342,8 +438,7 @@
               href="https://x.com/Vishalchavan_ai"
               target="_blank"
               rel="noopener"
-              class="liquid-button border-[0.5px] border-blue-900 inline-flex items-center gap-2 rounded-full px-5 py-2.5 glass-button hover:shadow-lg text-sm font-medium social-icon"
-              aria-label="Open X profile in new tab"
+              class="liquid-button border-[0.5px] border-blue-900 inline-flex items-center gap-2 rounded-full px-4 sm:px-5 py-2.5 glass-button hover:shadow-lg text-sm font-medium social-icon"
             >
               <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
                 <path
@@ -355,8 +450,7 @@
               href="https://github.com/VishalChavan7"
               target="_blank"
               rel="noopener"
-              class="liquid-button border-[0.5px] border-blue-900 inline-flex items-center gap-2 rounded-full px-5 py-2.5 glass-button hover:shadow-lg text-sm font-medium social-icon"
-              aria-label="Open GitHub in new tab"
+              class="liquid-button border-[0.5px] border-blue-900 inline-flex items-center gap-2 rounded-full px-4 sm:px-5 py-2.5 glass-button hover:shadow-lg text-sm font-medium social-icon"
             >
               <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
                 <path
@@ -365,15 +459,12 @@
               </svg>
               GitHub
             </a>
-
-            <!-- RESUME BUTTON (opens in new tab) -->
             <a
               id="resumeLink"
               href="/assets/Vishal-Chavan-Resume.pdf"
               target="_blank"
               rel="noopener"
-              class="liquid-button border-[0.5px] border-blue-900 inline-flex items-center gap-2 rounded-full px-5 py-2.5 glass-button hover:shadow-lg text-sm font-medium social-icon"
-              aria-label="Open resume in new tab"
+              class="liquid-button border-[0.5px] border-blue-900 inline-flex items-center gap-2 rounded-full px-4 sm:px-5 py-2.5 glass-button hover:shadow-lg text-sm font-medium social-icon"
             >
               <svg
                 class="w-5 h-5"
@@ -394,9 +485,9 @@
         </div>
 
         <div
-          class="relative h-full min-h-[500px] md:min-h-[calc(100vh-5rem)] order-1 md:order-2 flex items-center justify-center p-8"
+          class="relative h-full min-h-[360px] md:min-h-[calc(100vh-7rem)] order-1 md:order-2 flex items-center justify-center p-6 sm:p-8"
         >
-          <div class="relative w-full max-w-md aspect-square">
+          <div class="relative w-full max-w-xs sm:max-w-md aspect-square">
             <div
               class="absolute inset-0 rounded-full bg-gradient-to-br from-primary-400 to-accent-600 opacity-20 blur-3xl"
             ></div>
@@ -410,36 +501,38 @@
       </div>
     </section>
 
-    <section id="about" class="mx-auto max-w-6xl px-6 py-20">
-      <h2 class="text-3xl font-bold">About Me</h2>
+    <!-- ABOUT -->
+    <section id="about" class="mx-auto max-w-6xl px-5 sm:px-6 py-16 sm:py-20">
+      <h2 class="text-2xl sm:text-3xl font-bold">About Me</h2>
       <header>
-        <h2 class="mt-6 text-lg text-gray-700 dark:text-gray-300">
+        <h2
+          class="mt-4 sm:mt-6 text-base sm:text-lg text-gray-700 dark:text-gray-300"
+        >
           <strong>Vishal Chavan</strong> • Nagpur, Maharashtra
         </h2>
       </header>
-
       <article class="text-gray-700 dark:text-gray-300">
-        <p class="mt-6">
+        <p class="mt-4 sm:mt-6">
           I’m a recent Electronics Engineering graduate from Shri Ramdeobaba
           College of Engineering and Management, passionate about creating
           meaningful and impactful experiences.
         </p>
-        <p class="mt-6">
+        <p class="mt-4 sm:mt-6">
           In early 2025, I worked at Delaplex Ltd as a Frontend Developer &amp;
           UI/UX Designer, where I contributed to several exciting projects and
           learned how creativity and structure come together to build great
           products.
         </p>
-        <p class="mt-6">
+        <p class="mt-4 sm:mt-6">
           During my college years, I served as the System Head of the Robotics
           &amp; Aviation Club and achieved 1st place at the district level and
           5th place at the state level in chess tournaments.
         </p>
-        <p class="mt-6">
+        <p class="mt-4 sm:mt-6">
           Outside of work, I enjoy playing chess and reading books. These
           hobbies keep me grounded, improve my focus, and inspire new ideas.
         </p>
-        <p class="mt-6">
+        <p class="mt-4 sm:mt-6">
           You can explore more about me and my journey on
           <a
             href="https://github.com/VishalChavan7"
@@ -460,23 +553,29 @@
       </article>
     </section>
 
-    <section id="experience" class="mx-auto max-w-6xl px-6 py-20">
-      <h2 class="text-3xl font-bold">Experience</h2>
-      <div class="mt-8 grid gap-6">
-        <article class="glass-card rounded-3xl p-8 shadow-md">
-          <div class="flex items-baseline justify-between gap-4 flex-wrap">
-            <h3 class="text-xl font-semibold">
+    <!-- EXPERIENCE -->
+    <section
+      id="experience"
+      class="mx-auto max-w-6xl px-5 sm:px-6 py-16 sm:py-20"
+    >
+      <h2 class="text-2xl sm:text-3xl font-bold">Experience</h2>
+      <div class="mt-6 sm:mt-8 grid gap-6">
+        <article class="glass-card rounded-3xl p-6 sm:p-8 shadow-md">
+          <div
+            class="flex items-baseline justify-between gap-3 sm:gap-4 flex-wrap"
+          >
+            <h3 class="text-lg sm:text-xl font-semibold">
               Frontend Developer & UI/UX Designer — Delaplex Ltd.
             </h3>
-            <span class="text-sm text-gray-500"
+            <span class="text-xs sm:text-sm text-gray-500"
               >Jan 2025 – Jun 2025 · Nagpur, India</span
             >
           </div>
-          <p class="mt-4 text-gray-700 dark:text-gray-300">
+          <p class="mt-3 sm:mt-4 text-gray-700 dark:text-gray-300">
             <strong>Kaptize.ai</strong> — AI knowledge platform.
           </p>
           <ul
-            class="mt-3 list-disc ml-6 text-gray-700 dark:text-gray-300 space-y-2"
+            class="mt-2 sm:mt-3 list-disc ml-5 sm:ml-6 text-gray-700 dark:text-gray-300 space-y-2"
           >
             <li>
               Shipped 40+ responsive screens (Figma → code) with dynamic,
@@ -491,11 +590,11 @@
               Motion.
             </li>
           </ul>
-          <p class="mt-6 text-gray-700 dark:text-gray-300">
+          <p class="mt-4 sm:mt-6 text-gray-700 dark:text-gray-300">
             <strong>Assist.ai</strong> — AI learning assistant.
           </p>
           <ul
-            class="mt-3 list-disc ml-6 text-gray-700 dark:text-gray-300 space-y-2"
+            class="mt-2 sm:mt-3 list-disc ml-5 sm:ml-6 text-gray-700 dark:text-gray-300 space-y-2"
           >
             <li>
               Built Gemini-powered assistant + speech-to-text & TTS (≈98%
@@ -510,26 +609,35 @@
       </div>
     </section>
 
-    <section id="projects" class="mx-auto max-w-6xl px-6 py-20">
+    <!-- PROJECTS -->
+    <section
+      id="projects"
+      class="mx-auto max-w-6xl px-5 sm:px-6 py-16 sm:py-20"
+    >
       <div class="flex items-center justify-between">
-        <h2 class="text-3xl font-bold">Featured Projects</h2>
+        <h2 class="text-2xl sm:text-3xl font-bold">Featured Projects</h2>
         <a
           href="https://github.com/VishalChavan7"
           target="_blank"
-          class="text-sm text-primary-600 dark:text-primary-400 hover:underline"
+          class="text-xs sm:text-sm text-primary-600 dark:text-primary-400 hover:underline"
           >See all on GitHub →</a
         >
       </div>
-      <div class="mt-8 grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+      <div
+        class="mt-6 sm:mt-8 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 sm:gap-6"
+      >
+        <!-- cards unchanged -->
         <a
           href="https://vishalchavan7.github.io/spacex-mission-explorer"
           target="_blank"
-          class="group glass-card rounded-3xl p-6 hover:shadow-xl transition-all"
+          class="group glass-card rounded-3xl p-5 sm:p-6 hover:shadow-xl transition-all"
         >
           <div class="flex items-center justify-between">
-            <h3 class="text-lg font-semibold">SpaceX Mission Explorer</h3>
+            <h3 class="text-base sm:text-lg font-semibold">
+              SpaceX Mission Explorer
+            </h3>
             <span
-              class="text-xs px-3 py-1 rounded-full bg-accent-100 dark:bg-accent-900/40 text-accent-700 dark:text-accent-300"
+              class="text-[10px] sm:text-xs px-2.5 py-1 rounded-full bg-accent-100 dark:bg-accent-900/40 text-accent-700 dark:text-accent-300"
               >Frontend</span
             >
           </div>
@@ -543,12 +651,12 @@
         <a
           href="https://github.com/VishalChavan7/url_shortener"
           target="_blank"
-          class="group glass-card rounded-3xl p-6 hover:shadow-xl transition-all"
+          class="group glass-card rounded-3xl p-5 sm:p-6 hover:shadow-xl transition-all"
         >
           <div class="flex items-center justify-between">
-            <h3 class="text-lg font-semibold">URL Shortener</h3>
+            <h3 class="text-base sm:text-lg font-semibold">URL Shortener</h3>
             <span
-              class="text-xs px-3 py-1 rounded-full bg-primary-100 dark:bg-primary-900/40 text-primary-700 dark:text-primary-300"
+              class="text-[10px] sm:text-xs px-2.5 py-1 rounded-full bg-primary-100 dark:bg-primary-900/40 text-primary-700 dark:text-primary-300"
               >Full-stack</span
             >
           </div>
@@ -563,12 +671,12 @@
         <a
           href="https://github.com/VishalChavan7/Checkmate"
           target="_blank"
-          class="group glass-card rounded-3xl p-6 hover:shadow-xl transition-all"
+          class="group glass-card rounded-3xl p-5 sm:p-6 hover:shadow-xl transition-all"
         >
           <div class="flex items-center justify-between">
-            <h3 class="text-lg font-semibold">Checkmate</h3>
+            <h3 class="text-base sm:text-lg font-semibold">Checkmate</h3>
             <span
-              class="text-xs px-3 py-1 rounded-full bg-accent-100 dark:bg-accent-900/40 text-accent-700 dark:text-accent-300"
+              class="text-[10px] sm:text-xs px-2.5 py-1 rounded-full bg-accent-100 dark:bg-accent-900/40 text-accent-700 dark:text-accent-300"
               >Realtime</span
             >
           </div>
@@ -584,12 +692,12 @@
         <a
           href="https://wander-lodge.onrender.com"
           target="_blank"
-          class="group glass-card rounded-3xl p-6 hover:shadow-xl transition-all"
+          class="group glass-card rounded-3xl p-5 sm:p-6 hover:shadow-xl transition-all"
         >
           <div class="flex items-center justify-between">
-            <h3 class="text-lg font-semibold">WanderLodge</h3>
+            <h3 class="text-base sm:text-lg font-semibold">WanderLodge</h3>
             <span
-              class="text-xs px-3 py-1 rounded-full bg-primary-100 dark:bg-primary-900/40 text-primary-700 dark:text-primary-300"
+              class="text-[10px] sm:text-xs px-2.5 py-1 rounded-full bg-primary-100 dark:bg-primary-900/40 text-primary-700 dark:text-primary-300"
               >Full-stack</span
             >
           </div>
@@ -606,12 +714,12 @@
         <a
           href="https://github.com/VishalChavan7/Neatify"
           target="_blank"
-          class="group glass-card rounded-3xl p-6 hover:shadow-xl transition-all"
+          class="group glass-card rounded-3xl p-5 sm:p-6 hover:shadow-xl transition-all"
         >
           <div class="flex items-center justify-between">
-            <h3 class="text-lg font-semibold">Neatify</h3>
+            <h3 class="text-base sm:text-lg font-semibold">Neatify</h3>
             <span
-              class="text-xs px-3 py-1 rounded-full bg-primary-100 dark:bg-primary-900/40 text-primary-700 dark:text-primary-300"
+              class="text-[10px] sm:text-xs px-2.5 py-1 rounded-full bg-primary-100 dark:bg-primary-900/40 text-primary-700 dark:text-primary-300"
               >Automation</span
             >
           </div>
@@ -624,39 +732,42 @@
       </div>
     </section>
 
-    <section id="skills" class="mx-auto max-w-6xl px-6 py-20">
-      <h2 class="text-3xl font-bold">Skills</h2>
-      <div class="mt-8 grid sm:grid-cols-2 lg:grid-cols-3 gap-6 text-sm">
-        <div class="glass-card rounded-3xl p-6 shadow-md">
+    <!-- SKILLS -->
+    <section id="skills" class="mx-auto max-w-6xl px-5 sm:px-6 py-16 sm:py-20">
+      <h2 class="text-2xl sm:text-3xl font-bold">Skills</h2>
+      <div
+        class="mt-6 sm:mt-8 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 sm:gap-6 text-sm"
+      >
+        <div class="glass-card rounded-3xl p-5 sm:p-6 shadow-md">
           <h3 class="font-semibold text-lg mb-3">Frontend</h3>
           <p class="text-gray-700 dark:text-gray-300">
             HTML, CSS, Tailwind, JavaScript, TypeScript, React, EJS
           </p>
         </div>
-        <div class="glass-card rounded-3xl p-6 shadow-md">
+        <div class="glass-card rounded-3xl p-5 sm:p-6 shadow-md">
           <h3 class="font-semibold text-lg mb-3">Backend</h3>
           <p class="text-gray-700 dark:text-gray-300">
             Python, Flask, Node.js, Express
           </p>
         </div>
-        <div class="glass-card rounded-3xl p-6 shadow-md">
+        <div class="glass-card rounded-3xl p-5 sm:p-6 shadow-md">
           <h3 class="font-semibold text-lg mb-3">Databases</h3>
           <p class="text-gray-700 dark:text-gray-300">MongoDB, MySQL, SQLite</p>
         </div>
-        <div class="glass-card rounded-3xl p-6 shadow-md">
+        <div class="glass-card rounded-3xl p-5 sm:p-6 shadow-md">
           <h3 class="font-semibold text-lg mb-3">Tools</h3>
           <p class="text-gray-700 dark:text-gray-300">
             Figma, Git/GitHub, Passport, Socket.io, Stripe, Multer, Cloudinary,
             Mapbox, Render
           </p>
         </div>
-        <div class="glass-card rounded-3xl p-6 shadow-md">
+        <div class="glass-card rounded-3xl p-5 sm:p-6 shadow-md">
           <h3 class="font-semibold text-lg mb-3">Foundations</h3>
           <p class="text-gray-700 dark:text-gray-300">
             OOP, Networking, OS, DBMS, DSA (Java), Linux
           </p>
         </div>
-        <div class="glass-card rounded-3xl p-6 shadow-md">
+        <div class="glass-card rounded-3xl p-5 sm:p-6 shadow-md">
           <h3 class="font-semibold text-lg mb-3">Certifications</h3>
           <p class="text-gray-700 dark:text-gray-300">
             Cisco (Networking, OS), Google (Foundations of UX Design)
@@ -665,10 +776,15 @@
       </div>
     </section>
 
-    <section id="contact" class="mx-auto max-w-6xl px-6 py-20">
-      <h2 class="text-3xl font-bold">Contact</h2>
-      <div class="mt-8 grid lg:grid-cols-2 gap-8">
-        <div class="glass-card rounded-3xl p-8 shadow-md space-y-6">
+    <!-- CONTACT -->
+    <section id="contact" class="mx-auto max-w-6xl px-5 sm:px-6 py-16 sm:py-20">
+      <h2 class="text-2xl sm:text-3xl font-bold">Contact</h2>
+      <div
+        class="mt-6 sm:mt-8 grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-8 items-center"
+      >
+        <div
+          class="glass-card rounded-3xl p-5 sm:p-8 shadow-md space-y-5 sm:space-y-6"
+        >
           <div>
             <label class="block text-sm font-medium mb-2">Your Name</label>
             <input
@@ -701,7 +817,10 @@
         </div>
 
         <div class="flex items-center justify-center">
-          <div class="w-full max-w-md transform translate-x-16 -translate-y-4">
+          <!-- remove large translate on mobile -->
+          <div
+            class="w-full max-w-xs sm:max-w-md md:translate-x-16 md:-translate-y-4"
+          >
             <svg viewBox="0 0 400 400" class="w-full h-auto">
               <defs>
                 <linearGradient id="grad1" x1="0%" y1="0%" x2="100%" y2="100%">
@@ -851,53 +970,53 @@
     </section>
 
     <script>
-      // Custom cursor
+      // Custom cursor (disabled on touch)
+      const isTouch = matchMedia("(hover: none), (pointer: coarse)").matches;
       const cursor = document.getElementById("cursor");
       const cursorFollower = document.getElementById("cursor-follower");
-      let mouseX = 0,
-        mouseY = 0,
-        cursorX = 0,
-        cursorY = 0,
-        followerX = 0,
-        followerY = 0;
 
-      document.addEventListener("mousemove", (e) => {
-        mouseX = e.clientX;
-        mouseY = e.clientY;
-      });
+      if (!isTouch) {
+        let mouseX = 0,
+          mouseY = 0,
+          cursorX = 0,
+          cursorY = 0,
+          followerX = 0,
+          followerY = 0;
+        document.addEventListener("mousemove", (e) => {
+          mouseX = e.clientX;
+          mouseY = e.clientY;
+        });
+        function animateCursor() {
+          const speed = 0.2,
+            followerSpeed = 0.1;
+          cursorX += (mouseX - cursorX) * speed;
+          cursorY += (mouseY - cursorY) * speed;
+          followerX += (mouseX - followerX) * followerSpeed;
+          followerY += (mouseY - followerY) * followerSpeed;
+          cursor.style.left = cursorX + "px";
+          cursor.style.top = cursorY + "px";
+          cursorFollower.style.left = followerX + "px";
+          cursorFollower.style.top = followerY + "px";
+          requestAnimationFrame(animateCursor);
+        }
+        animateCursor();
 
-      function animateCursor() {
-        const speed = 0.2,
-          followerSpeed = 0.1;
-        cursorX += (mouseX - cursorX) * speed;
-        cursorY += (mouseY - cursorY) * speed;
-        followerX += (mouseX - followerX) * followerSpeed;
-        followerY += (mouseY - followerY) * followerSpeed;
-        cursor.style.left = cursorX + "px";
-        cursor.style.top = cursorY + "px";
-        cursorFollower.style.left = followerX + "px";
-        cursorFollower.style.top = followerY + "px";
-        requestAnimationFrame(animateCursor);
+        const interactiveElements = document.querySelectorAll(
+          "a, button, input, textarea"
+        );
+        interactiveElements.forEach((el) => {
+          el.addEventListener("mouseenter", () =>
+            document.body.classList.add("cursor-hover")
+          );
+          el.addEventListener("mouseleave", () =>
+            document.body.classList.remove("cursor-hover")
+          );
+        });
       }
-      animateCursor();
-
-      // Hover grow effect
-      const interactiveElements = document.querySelectorAll(
-        "a, button, input, textarea"
-      );
-      interactiveElements.forEach((el) => {
-        el.addEventListener("mouseenter", () =>
-          document.body.classList.add("cursor-hover")
-        );
-        el.addEventListener("mouseleave", () =>
-          document.body.classList.remove("cursor-hover")
-        );
-      });
 
       // Theme toggle persistence
       const htmlElement = document.documentElement;
       const themeToggle = document.getElementById("themeToggle");
-
       function initTheme() {
         const savedTheme = localStorage.getItem("theme");
         const systemPrefersDark = window.matchMedia(
@@ -908,7 +1027,6 @@
         else htmlElement.classList.remove("dark");
       }
       initTheme();
-
       themeToggle.addEventListener("click", () => {
         htmlElement.classList.toggle("dark");
         const newTheme = htmlElement.classList.contains("dark")
@@ -917,13 +1035,33 @@
         localStorage.setItem("theme", newTheme);
       });
 
-      // Optional: if you deploy with a different resume path, set it here:
-      // Example: const resumeUrl = "/assets/Vishal-Chavan-Resume.pdf";
-      const resumeUrl = "/assets/Vishal-Chavan-Resume.pdf"; // keep file next to this HTML
+      // Resume link (optional override)
+      const resumeUrl = "/assets/Vishal-Chavan-Resume.pdf";
       const resumeLink = document.getElementById("resumeLink");
       resumeLink.setAttribute("href", resumeUrl);
       resumeLink.setAttribute("target", "_blank");
       resumeLink.setAttribute("rel", "noopener");
+
+      // Mobile menu
+      const btn = document.getElementById("mobileMenuBtn");
+      const iconMenu = document.getElementById("iconMenu");
+      const iconClose = document.getElementById("iconClose");
+      const mobileMenu = document.getElementById("mobileMenu");
+
+      btn.addEventListener("click", () => {
+        mobileMenu.classList.toggle("hidden");
+        const open = !mobileMenu.classList.contains("hidden");
+        btn.setAttribute("aria-expanded", String(open));
+        iconMenu.classList.toggle("hidden", open);
+        iconClose.classList.toggle("hidden", !open);
+      });
+      // Close the mobile menu when a link is tapped
+      mobileMenu.querySelectorAll("a").forEach((a) => {
+        a.addEventListener("click", () => {
+          mobileMenu.classList.add("hidden");
+          mobileBtn.setAttribute("aria-expanded", "false");
+        });
+      });
     </script>
   </body>
 </html>
