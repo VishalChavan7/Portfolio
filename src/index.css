@@ -657,6 +657,7 @@ img {
   }
   .hero .eyebrow {
     align-self: center;
+    text-align: center;
   }
   .hero-name {
     font-size: min(21vw, 25svh);
@@ -668,6 +669,7 @@ img {
     margin-bottom: auto;
     align-self: center;
     text-align: center;
+    max-width: 100%;
   }
   .hero-card .pill {
     justify-self: center;
