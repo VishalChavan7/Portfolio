@@ -213,9 +213,9 @@ function About() {
     <section id="about" className="light pad">
       <p className="eyebrow reveal">about</p>
       <p className="statement reveal">
-        i build <b>accessible, responsive</b> web apps with{" "}
-        <b>react, node & python</b> — from figma frame to{" "}
-        <b>production deploy</b>. electronics engineer from <b>RCOEM</b>, chess
+        I build <b>accessible, responsive</b> web apps with{" "}
+        <b>React, Node & Python</b> — from Figma frame to{" "}
+        <b>production deploy</b>. Electronics engineer from <b>RCOEM</b>, chess
         player, and <b>detail-obsessed</b> by habit.
       </p>
       <Marquee items={stack} />
