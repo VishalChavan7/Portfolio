@@ -724,10 +724,6 @@ img {
       radial-gradient(120% 90% at 100% 0%, rgba(214, 242, 43, 0.28), transparent 60%),
       linear-gradient(160deg, var(--forest), var(--ink));
   }
-  .skill {
-    background: var(--forest);
-    box-shadow: inset 4px 0 0 var(--lime); /* lime edge stands in for the hover colour */
-  }
 }
 @media (prefers-reduced-motion: reduce) {
   *,
