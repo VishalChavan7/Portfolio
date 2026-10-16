@@ -647,9 +647,13 @@ img {
   .hero {
     height: auto;
     min-height: 100svh;
-    justify-content: center; /* equal space above and below the content */
+    justify-content: flex-start;
     padding-top: 88px; /* clears the fixed top bar, so content centres in the visible area below it */
     padding-bottom: 24px;
+  }
+  /* photo stays at the top; auto margins centre eyebrow + name + card in the space below it */
+  .hero .eyebrow {
+    margin-top: auto;
   }
   .hero-name {
     font-size: min(21vw, 25svh);
@@ -657,6 +661,7 @@ img {
   }
   .hero-card {
     margin-top: 24px;
+    margin-bottom: auto;
   }
   .pad {
     padding-block: 72px;
