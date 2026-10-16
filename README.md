@@ -1,7 +1,7 @@
 # 🌐 Vishal Chavan — Developer Portfolio
 
 Welcome to my personal developer portfolio!  
-This website showcases my work, skills, and experience as a **Full-Stack Developer** — designed with a modern, liquid-glass morphism aesthetic and built using pure **HTML, TailwindCSS (via CDN), and vanilla JavaScript**.
+This website showcases my work, skills, and experience as a **Full-Stack Developer** — with a bold dark / cream / lime motorsport-inspired look, built with **React + Vite**.
 
 🔗 **Live Site:** [https://vishalchavan.netlify.app](https://vishalchavan.netlify.app)
 
@@ -12,11 +12,10 @@ This website showcases my work, skills, and experience as a **Full-Stack Develop
 This portfolio is a lightweight, responsive single-page website featuring:
 
 - 💡 Glass-style UI and smooth animations
-- 🌙 **Dark / Light mode** with localStorage persistence
 - 🖱️ Custom animated cursor and interactive hover effects
-- 🎨 Sections for About, Experience, Projects, Skills, and Contact
+- 🎨 Sections for About, experience, Projects, Skills, and Contact
 - 📄 Integrated resume download
-- ⚡ No build tools or frameworks — pure static deployment
+- ⚡ Run locally: `npm install && npm run dev` · build: `npm run build` (outputs `dist/`)
 
 ---
 
@@ -24,7 +23,7 @@ This portfolio is a lightweight, responsive single-page website featuring:
 
 | Category       | Tools / Frameworks Used                       |
 | -------------- | --------------------------------------------- |
-| **Frontend**   | HTML5, TailwindCSS (CDN), Vanilla JavaScript  |
+| **Frontend**   | React 18, Vite, plain CSS                     |
 | **Design**     | Figma, Framer Motion (inspired motion design) |
 | **Deployment** | Netlify (Static hosting)                      |
 | **Versioning** | Git & GitHub                                  |
@@ -36,8 +35,9 @@ This portfolio is a lightweight, responsive single-page website featuring:
 ```
 portfolio/
 │
-├── index.html                 # Main file
-├── assets/
+├── index.html                 # Vite entry
+├── src/                       # App.jsx, data.js (all content), index.css
+├── public/assets/
 │   ├── profile.jpg            # Profile image
 │   ├── briefcase-solid-full.svg
 │   └── Vishal-Chavan-Resume.pdf
