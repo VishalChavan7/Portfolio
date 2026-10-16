@@ -710,7 +710,7 @@ img {
   }
   .hero-photo {
     position: relative; /* relative + top nudges the photo down without moving the content below */
-    top: 24px;
+    top: clamp(0px, calc((100svh - 650px) * 0.12), 24px);
     right: auto;
     translate: none;
     width: min(100%, 320px, 26svh);
