@@ -655,13 +655,22 @@ img {
   .hero .eyebrow {
     margin-top: auto;
   }
+  .hero .eyebrow {
+    align-self: center;
+  }
   .hero-name {
     font-size: min(21vw, 25svh);
     margin-top: 16px;
+    align-items: center;
   }
   .hero-card {
     margin-top: 24px;
     margin-bottom: auto;
+    align-self: center;
+    text-align: center;
+  }
+  .hero-card .pill {
+    justify-self: center;
   }
   .pad {
     padding-block: 72px;
