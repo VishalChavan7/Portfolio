@@ -641,14 +641,52 @@ img {
   .form {
     grid-template-columns: 1fr;
   }
-  .tile {
-    aspect-ratio: 4 / 3;
-  }
-  .tile:hover h3 {
-    transform: translateY(-110px);
-  }
   .scroll-cue {
     display: none;
+  }
+  .hero {
+    height: auto;
+    min-height: 100svh;
+    padding-top: 88px;
+    padding-bottom: 48px;
+  }
+  .hero-name {
+    font-size: min(21vw, 25svh);
+  }
+  .pad {
+    padding-block: 72px;
+  }
+  .section-title,
+  .contact-title {
+    margin-bottom: 32px;
+  }
+  .statement {
+    margin-bottom: 40px;
+  }
+  .topbar-right .pill {
+    padding: 8px 14px;
+  }
+  .tile {
+    aspect-ratio: auto;
+    min-height: 260px;
+    padding: 20px;
+  }
+  .tile-no {
+    font-size: 56px;
+    left: 20px;
+  }
+  .tile-tag {
+    top: 20px;
+    right: 20px;
+  }
+  .tile-more {
+    min-height: 140px;
+  }
+  .skill {
+    padding: 24px;
+  }
+  .big-number {
+    font-size: 140px;
   }
   .hero-photo {
     position: static;
