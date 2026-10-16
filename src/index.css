@@ -648,15 +648,15 @@ img {
     height: auto;
     min-height: 100svh;
     justify-content: center; /* equal space above and below the content */
-    padding-top: 88px;
-    padding-bottom: 88px;
+    padding-top: 88px; /* clears the fixed top bar, so content centres in the visible area below it */
+    padding-bottom: 24px;
   }
   .hero-name {
     font-size: min(21vw, 25svh);
-    margin-top: 8px;
+    margin-top: 16px;
   }
   .hero-card {
-    margin-top: 28px;
+    margin-top: 24px;
   }
   .pad {
     padding-block: 72px;
@@ -697,7 +697,7 @@ img {
     position: static;
     translate: none;
     width: min(100%, 320px, 26svh);
-    margin: 0 auto 28px;
+    margin: 0 auto 24px;
   }
 }
 @media (prefers-reduced-motion: reduce) {
