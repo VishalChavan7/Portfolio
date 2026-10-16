@@ -323,12 +323,24 @@ function Skills() {
 }
 
 function Contact() {
-  // No backend: hand the message to the visitor's mail client.
-  const send = (e) => {
+  const [status, setStatus] = useState("");
+  // No backend: FormSubmit relays the message to links.email (first submission needs a one-time activation click in that inbox).
+  const send = async (e) => {
     e.preventDefault();
-    const f = new FormData(e.target);
-    const body = `${f.get("message")}\n\n— ${f.get("name")} (${f.get("email")})`;
-    location.href = `mailto:${links.email}?subject=${encodeURIComponent("Portfolio enquiry")}&body=${encodeURIComponent(body)}`;
+    const form = e.target;
+    setStatus("sending…");
+    try {
+      const res = await fetch(`https://formsubmit.co/ajax/${links.email}`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json", Accept: "application/json" },
+        body: JSON.stringify({ ...Object.fromEntries(new FormData(form)), _subject: "Portfolio enquiry" }),
+      });
+      if (!res.ok) throw new Error();
+      form.reset();
+      setStatus("sent — thanks, I'll reply soon.");
+    } catch {
+      setStatus(`couldn't send — please email ${links.email}`);
+    }
   };
   return (
     <section id="contact" className="lime pad">
@@ -346,7 +358,8 @@ function Contact() {
           message
           <textarea name="message" rows="4" required />
         </label>
-        <button className="pill pill-dark">send →</button>
+        <button className="pill pill-dark" disabled={status === "sending…"}>send →</button>
+        {status && <p className="full" role="status">{status}</p>}
       </form>
     </section>
   );

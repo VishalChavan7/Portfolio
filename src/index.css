@@ -718,6 +718,15 @@ img {
     margin: 0 auto 24px;
   }
 }
+/* touch devices never see the hover colour, so give the cards a gradient by default */
+@media (hover: none) {
+  .tile:not(.tile-more),
+  .skill {
+    background:
+      radial-gradient(120% 90% at 100% 0%, rgba(214, 242, 43, 0.28), transparent 60%),
+      linear-gradient(160deg, var(--forest), var(--ink));
+  }
+}
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,
