@@ -647,24 +647,16 @@ img {
   .hero {
     height: auto;
     min-height: 100svh;
+    justify-content: center; /* equal space above and below the content */
     padding-top: 88px;
-    padding-bottom: 48px;
+    padding-bottom: 88px;
   }
   .hero-name {
     font-size: min(21vw, 25svh);
-    align-items: center;
-  }
-  .hero .eyebrow {
-    text-align: center;
+    margin-top: 8px;
   }
   .hero-card {
-    align-self: center;
-    width: 100%;
-    max-width: 320px;
-    text-align: center;
-  }
-  .hero-card .pill {
-    justify-self: center;
+    margin-top: 28px;
   }
   .pad {
     padding-block: 72px;
@@ -705,7 +697,7 @@ img {
     position: static;
     translate: none;
     width: min(100%, 320px, 26svh);
-    margin: 0 auto clamp(8px, 3svh, 32px);
+    margin: 0 auto 28px;
   }
 }
 @media (prefers-reduced-motion: reduce) {
