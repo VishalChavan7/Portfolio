@@ -652,6 +652,19 @@ img {
   }
   .hero-name {
     font-size: min(21vw, 25svh);
+    align-items: center;
+  }
+  .hero .eyebrow {
+    text-align: center;
+  }
+  .hero-card {
+    align-self: center;
+    width: 100%;
+    max-width: 320px;
+    text-align: center;
+  }
+  .hero-card .pill {
+    justify-self: center;
   }
   .pad {
     padding-block: 72px;
